@@ -1,0 +1,5 @@
+bazel (0.25.2) unstable; urgency=medium
+
+  * Initial debian dist files added
+
+ -- Wook Song <wook16.song@samsung.com>  Thu, 10 Oct 2019 22:48:00 +0900

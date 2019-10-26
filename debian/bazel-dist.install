@@ -1,0 +1,3 @@
+/usr/bin/bazel
+/etc/bazel.bazelrc
+/etc/bash_completion.d/bazel

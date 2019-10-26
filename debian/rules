@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+
+# see FEATURE AREAS in dpkg-buildflags(1)
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# see ENVIRONMENT in dpkg-buildflags(1)
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+export DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-${DEB_HOST_ARCH}
+SRC_ROOT_DIR:=$(shell pwd)
+
+%:
+	dh $@ --parallel
+
+override_dh_update_autotools_config:
+override_dh_auto_configure:
+override_dh_strip_nondeterminism:
+override_dh_shlibdeps:
+override_dh_strip:
+override_dh_makeshlibs:
+
+override_dh_auto_clean:
+	rm -rf ${SRC_ROOT_DIR}/output
+
+${SRC_ROOT_DIR}/output/bazel:
+	EXTRA_BAZEL_ARGS="--host_javabase=@local_jdk//:jdk" ./compile.sh
+
+override_dh_auto_build: ${SRC_ROOT_DIR}/output/bazel
+
+override_dh_auto_install:
+	mkdir -p ${SRC_ROOT_DIR}/debian/tmp/usr/bin
+	mkdir -p ${SRC_ROOT_DIR}/debian/tmp/etc/bash_completion.d
+	touch ${SRC_ROOT_DIR}/debian/tmp/etc/bazel.bazelrc
+	install -m 755 ${SRC_ROOT_DIR}/output/bazel ${SRC_ROOT_DIR}/debian/tmp/usr/bin
+	scripts/generate_bash_completion.sh --prepend=scripts/bazel-complete-header.bash \
+		--prepend=scripts/bazel-complete-template.bash --bazel=debian/tmp/usr/bin/bazel \
+		--output=debian/tmp/etc/bash_completion.d/bazel
+
+

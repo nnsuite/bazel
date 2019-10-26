@@ -1,0 +1,18 @@
+Source: bazel
+Section: contrib/devel
+Priority: optional
+Maintainer: Wooks Song <wook16.song@samsung.com>
+Build-Depends: debhelper (>=9), bash, openjdk-8-jdk, zip, unzip, python
+Standards-Version: 0.25.2-dist
+Homepage: https://github.com/bazelbuild/bazel
+
+Package: bazel-dist
+Architecture: any
+Multi-Arch: same
+Depends: g++, zlib1g-dev, unzip, bash-completion, python, ${misc:Depends}, ${shlibs:Depends}
+Suggests: openjdk-8-jdk
+Description: Bazel is a tool that automates software builds and tests.
+ Supported build tasks include running compilers and linkers to produce
+ executable programs and libraries, and assembling deployable packages
+ for Android, iOS and other target environments. Bazel is similar to
+ other tools like Make, Ant, Gradle, Buck, Pants and Maven.

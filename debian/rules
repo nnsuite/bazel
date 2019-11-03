@@ -15,6 +15,7 @@
 
 export DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-${DEB_HOST_ARCH}
+export BAZEL_JAVAC_OPTS=-J-Xmx2g
 SRC_ROOT_DIR:=$(shell pwd)
 
 %:

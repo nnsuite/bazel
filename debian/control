@@ -2,14 +2,14 @@ Source: bazel
 Section: contrib/devel
 Priority: optional
 Maintainer: Wooks Song <wook16.song@samsung.com>
-Build-Depends: debhelper (>=9), bash, openjdk-8-jdk, zip, unzip, python
+Build-Depends: debhelper (>=9), bash, openjdk-8-jdk, zip, unzip, python | python3, g++-10 | g++-9 | g++-8 | g++-7 | g++-6 | g++-5, gcc-10 | gcc-9 | gcc-8 | gcc-7 | gcc-6 | gcc-5
 Standards-Version: 0.25.2-dist
 Homepage: https://github.com/bazelbuild/bazel
 
 Package: bazel-dist
 Architecture: any
 Multi-Arch: same
-Depends: g++, zlib1g-dev, unzip, bash-completion, python, ${misc:Depends}, ${shlibs:Depends}
+Depends: g++, zlib1g-dev, unzip, bash-completion, python | python3, ${misc:Depends}, ${shlibs:Depends}
 Suggests: openjdk-8-jdk
 Description: Bazel is a tool that automates software builds and tests.
  Supported build tasks include running compilers and linkers to produce
